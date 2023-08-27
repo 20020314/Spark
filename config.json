@@ -1,0 +1,12 @@
+{
+    "listen": ":8000",
+    "salt": "389609066yllwxuhkak",
+    "auth": {
+        "lin": "389609066"
+    },
+    "log": {
+        "level": "info",
+        "path": "./logs",
+        "days": 7
+    }
+}
