@@ -3,20 +3,16 @@ type: docker
 name: Build-Spark
 
 steps:
-- name: Git-clone
-  image: alpine
-  commands:
-  - apk update
-  - apk add git
-  - git clone https://github.com/XZB-1248/Spark
-
 - name: Go-Build-WEB
-  image: golang:latest
+  image: node:18.19.0-bullseye
   commands:
   - cd Spark/web
   - npm install
   - npm run build-prod
-  - cd ..
+
+- name: Go-Build-WEB-V2
+  image: golang:latest
+  commands:
   - go install github.com/rakyll/statik
   - statik -m -src="./web/dist" -f -dest="./server/embed" -p web -ns web
 
