@@ -1,0 +1,35 @@
+kind: pipeline
+type: docker
+name: Build-Spark
+
+steps:
+- name: Git-clone
+  image: alpine
+  commands:
+  - apk update
+  - apk add git
+  - git clone https://github.com/XZB-1248/Spark
+
+- name: Go-Build-WEB
+  image: golang:latest
+  commands:
+  - cd Spark/web
+  - npm install
+  - npm run build-prod
+  - cd ..
+  - go install github.com/rakyll/statik
+  - statik -m -src="./web/dist" -f -dest="./server/embed" -p web -ns web
+
+- name: Go-Build-Client
+  image: golang:latest
+  commands:
+  - mkdir ./built
+  - go mod tidy
+  - go mod download
+  - bash ./scripts/build.client.sh
+
+- name: Go-Build-Server
+  image: golang:latest
+  commands:
+  - mkdir ./releases
+  - bash ./scripts/build.server.sh
