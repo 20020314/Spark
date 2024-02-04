@@ -6,7 +6,7 @@ steps:
 - name: Go-Build-WEB
   image: node:18.19.0-bullseye
   commands:
-  - cd Spark/web
+  - cd web
   - npm install
   - npm run build-prod
 
